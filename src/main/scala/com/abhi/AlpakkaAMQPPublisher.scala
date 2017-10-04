@@ -31,7 +31,7 @@ object AlpakkaAMQPPublisher extends App {
 
    val resource = getClass.getResource("/countrycapital.csv")
    val path = Paths.get(resource.toURI)
-   val source = FileTailSource.lines(path, 8092, 100 millis).map{x => println(x); x}.map(ByteString(_))
+   val source = FileIO.fromPath(path)
 
    val graph = RunnableGraph.fromGraph(GraphDSL.create(amqpSink){implicit builder =>
       s =>
